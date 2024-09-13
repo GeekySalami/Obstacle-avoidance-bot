@@ -1,0 +1,8 @@
+prefix=/home/sharvil-palvekar/catkin_ws/install
+
+Name: self_driving_car_sim
+Description: Description of self_driving_car_sim
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

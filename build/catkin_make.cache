@@ -1,0 +1,2 @@
+beginner_tutorials:self_driving_car_sim
+-DCATKIN_DEVEL_PREFIX=/home/sharvil-palvekar/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sharvil-palvekar/catkin_ws/install -G Unix Makefiles

@@ -1,0 +1,30 @@
+<launch>
+  <!-- Set the model path to include your new models -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find self_driving_car_sim)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+
+  <!-- Launch Gazebo with the updated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find self_driving_car_sim)/worlds/room4/world_dynamic.model"/>
+  </include>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find self_driving_car_sim)/urdf/test.urdf'" />
+
+  <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model self_driving_car -param robot_description -x=13.363591 -y=0 -z=0.192497 -R 0.00 -P 0.000017 -Y -3.132783"/> 
+
+  <!-- Launch the self-driving car control script -->
+  <node name="self_driving_car_control" pkg="self_driving_car_sim" type="self_driving_car.py" output="screen"/>
+  <node name="self_driving_car_objdetect" pkg="self_driving_car_sim" type="objde.py" output="screen"/>
+
+  <!--<node name="spawn_prius_hybrid" pkg="gazebo_ros" type="spawn_model" args="-file $(find self_driving_car_sim)/models/Prius_Hybrid/model.sdf -sdf -model prius_hybrid" output="screen" />-->
+  <!-- Optionally, you can add image view node to visualize the camera feed -->
+  
+  <!-- <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/self_driving_car/camera/image_raw"/>
+    <param name="autosize" value="true" />
+  </node> -->
+
+</launch>
+
